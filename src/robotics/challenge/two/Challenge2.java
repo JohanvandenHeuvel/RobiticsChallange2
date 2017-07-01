@@ -18,15 +18,23 @@ public class Challenge2 {
 		
 		//Sensors
 		EV3ColorSensor color = new EV3ColorSensor(SensorPort.S1);
+		System.out.println("Color loaded..");
 		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S3);
-		EV3UltrasonicSensor sonic = new EV3UltrasonicSensor(SensorPort.S4);
+		System.out.println("Gyro loaded..");
+		EV3UltrasonicSensor sonic = new EV3UltrasonicSensor(SensorPort.S2);
+		System.out.println("Sonic loaded..");
+		System.out.println("Sensors loaded..");
 		
 		//Behaviors
-		Behavior FindLine = new FindLine();
-		Behavior FollowLine = new FollowLine(color);
+		Behavior FollowLine = new FollowLine(color, gyro);
+		System.out.println("FollowLine loaded..");
+		Behavior Bridge = new Bridge (color, gyro);
+		System.out.println("Bridge loaded..");
+		System.out.println("Behaviors loaded..");
+
 		
 		//Arbitrator
-		Behavior [] bArray = {FindLine, FollowLine};
+		Behavior [] bArray = {FollowLine, Bridge};
 		Arbitrator arbitrator = new Arbitrator(bArray);
 		arbitrator.start();
 	}
